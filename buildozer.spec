@@ -1,7 +1,5 @@
 [app]
 title = Snake Game
-[app]
-title = Snake Game
 package.name = snakegame
 package.domain = org.example
 source.dir = .
