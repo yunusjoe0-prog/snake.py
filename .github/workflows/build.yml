@@ -25,16 +25,14 @@ jobs:
         pip install --upgrade pip
         pip install buildozer cython
 
-    - name: Accept Android SDK Licenses Automatically
+    - name: Prepare Android SDK License Accept Bypass
       run: |
-        # تثبيت وتفعيل رخص أدوات أندرويد بشكل قسري لمنع توقف البناء
         mkdir -p $HOME/.android
         touch $HOME/.android/repositories.cfg
-        export ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk
-        
-        # استخدام أداة sdkmanager للموافقة على التراخيص إذا كانت متوفرة، أو إنشاء ملفات القبول يدوياً
-        yes | sdkmanager --licenses || true
-      shell: bash
+        # إنشاء مجلد التراخيص الوهمي لمنع مطالبة الترخيص اليدوي
+        mkdir -p $HOME/.buildozer/android/platform/android-sdk/licenses/
+        echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > $HOME/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
+        echo -e "\n24333f8a53b683362c332989ad873e32b50426b3" >> $HOME/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
 
     - name: Build APK with Buildozer
       run: |
